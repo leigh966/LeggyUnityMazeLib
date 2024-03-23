@@ -25,7 +25,7 @@ public class MazeGame : MonoBehaviour
     }
 
 
-    private void Move(Vector2Int delta)
+    protected void Move(Vector2Int delta)
     {
         if (m.GetPosition(playerPos.x, playerPos.y).IsValidMove(delta))
         {
@@ -34,7 +34,7 @@ public class MazeGame : MonoBehaviour
     }
 
 
-    private void HandleInput()
+    virtual protected void HandleInput()
     {
         if(Input.GetKeyDown(KeyCode.W))
         {

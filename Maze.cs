@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Maze
 {
-    private MazePosition[,] maze;
+    protected MazePosition[,] maze;
     public const int MAZE_WIDTH = 10, MAZE_HEIGHT = 10;
     public Vector2Int startPos, endPos;
 
@@ -13,7 +13,7 @@ public class Maze
         return maze[x, y];
     }
 
-    private void MakeMazeNull()
+    protected virtual void MakeMazeNull()
     {
         maze = new MazePosition[MAZE_WIDTH, MAZE_HEIGHT];
         for(int x = 0; x < MAZE_WIDTH; x++)
@@ -25,7 +25,7 @@ public class Maze
         }
     }
 
-    private void GenerateStartPos()
+    protected virtual void GenerateStartPos()
     {
         int swap = Random.Range(0, 2);
         if (swap == 0)
@@ -39,7 +39,7 @@ public class Maze
     }
 
 
-    private int FlipOrRandomize(int value, int exclusiveMax)
+    protected virtual int FlipOrRandomize(int value, int exclusiveMax)
     {
         int inclusiveMax = exclusiveMax-1;
         if(value == 0) return inclusiveMax;
@@ -47,7 +47,7 @@ public class Maze
         return Random.Range(0, exclusiveMax);
     }
 
-    private void GenerateEndPos()
+    protected virtual void GenerateEndPos()
     {
         endPos = Vector2Int.zero;
         endPos.x = FlipOrRandomize(startPos.x, MAZE_WIDTH);
@@ -62,7 +62,7 @@ public class Maze
     }
     static readonly Vector2Int[] directions = { Vector2Int.up, Vector2Int.right, Vector2Int.down, Vector2Int.left };
 
-    private Vector2Int[] GetPossibleMoves(Vector2Int currentPosition)
+    public Vector2Int[] GetPossibleMoves(Vector2Int currentPosition)
     {
         List<Vector2Int> output = new List<Vector2Int>();
         foreach (var dir in directions)
@@ -77,7 +77,7 @@ public class Maze
     }
 
 
-    private void RemoveWall(Vector2Int selectedMove, ref MazePosition mazePosition)
+    protected void RemoveWall(Vector2Int selectedMove, ref MazePosition mazePosition)
     {
         if (selectedMove.Equals(Vector2Int.up))
         {
@@ -106,7 +106,7 @@ public class Maze
         }
     }
 
-    private void GenerateMaze()
+    protected virtual void GenerateMaze()
     {
         // how do we do this? -  "recursive backtracker" algorithm
         MakeMazeNull();
