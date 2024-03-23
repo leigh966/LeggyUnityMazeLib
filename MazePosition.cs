@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -26,6 +27,28 @@ public class MazePosition
     public bool IsValidMove(Vector2Int move)
     {
         return move.magnitude==1 && (move.x == 1 && canMoveEast || move.x == -1 && canMoveWest || move.y == 1 && canMoveNorth || move.y == -1 && canMoveSouth);
+    }
+
+    public List<Vector2Int> GetWalls()
+    {
+        List<Vector2Int> walls = new List<Vector2Int>();
+        if(!canMoveNorth)
+        {
+            walls.Add(Vector2Int.up);
+        }
+        if(!canMoveSouth)
+        {
+            walls.Add(Vector2Int.down);
+        }
+        if(!canMoveWest)
+        {
+            walls.Add(Vector2Int.left);
+        }
+        if(!canMoveEast)
+        {
+            walls.Add(Vector2Int.right);
+        }
+        return walls;
     }
 
 }
